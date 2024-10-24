@@ -41,8 +41,8 @@ public class UsuarioController {
 	public String login(@ModelAttribute("usuario") UsuarioEntity usuarioFormulario, Model model, HttpSession session) {
 		boolean validarUsuario = usuarioService.validarUsuario(usuarioFormulario);
 		if (validarUsuario) {
-			session.setAttribute("usuario", usuarioFormulario.getCorreo());
-			return "redirect:/producto";
+			session.setAttribute("usuario", usuarioFormulario.getCorreo() );
+			return "redirect:/producto/";
 		}
 		model.addAttribute("loginInvalido", "No existe el usuario");
 		model.addAttribute("usuario", new UsuarioEntity());
