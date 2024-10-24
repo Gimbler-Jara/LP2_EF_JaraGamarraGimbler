@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css"></head>
+<body>
+    <div class="container mt-5">
+        <h2>Lista de Productos</h2>
+        <a th:href="@{/producto/registrar_producto}" class="btn btn-primary">Registrar</a>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID Producto</th>
+                    <th>Nombre Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Categoría</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="producto : ${listaprod}">
+                    <td th:text="${producto.productoId}"></td>
+                    <td th:text="${producto.nombreProducto}"></td>
+                    <td th:text="${producto.precio}"></td>
+                    <td th:text="${producto.cantidad}"></td>
+                    <td th:text="${producto.fechaVencimiento}"></td>
+                    <td th:text="${producto.categoriaEntity.nombreCategoria}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
