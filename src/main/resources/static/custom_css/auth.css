@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.container-registerUser {
+	width: 100vw;
+	height: 100vh;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.contenedor {
+	width: 30%;
+	height: 70%;
+	padding: 20px;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content:center;
+	border-radius: 7%;
+}
+
+.login{
+	width: 20%;
+	height: 40%;
+	padding: 20px;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content:center;
+	border-radius: 7%;
+}
