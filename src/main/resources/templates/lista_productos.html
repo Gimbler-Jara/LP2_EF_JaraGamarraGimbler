@@ -23,7 +23,7 @@
                 <tr>
                     <th>ID Producto</th>
                     <th>Nombre Producto</th>
-                    <th>Precio</th>
+                    <th>Precio S/.</th>
                     <th>Stock Producto</th>
                     <th>Categoría</th>
                     <th>Acciones</th>
@@ -36,7 +36,9 @@
                     <td th:text="${producto.precio}"></td>
                     <td th:text="${producto.stockProducto}"></td>
                     <td th:text="${producto.categoriaEntity.nombreCategoria}"></td>
-                    <td></td>
+                    <td>  <a th:href="@{/producto/editar_producto/{id}(id=${producto.productoId})}" class="btn btn-info">Editar</a>
+                          <a th:href="@{/producto/detalle_producto/{id}(id=${producto.productoId})}" class="btn btn-warning">Ver Detalle</a>
+                     </td>
                 </tr>
             </tbody>
         </table>

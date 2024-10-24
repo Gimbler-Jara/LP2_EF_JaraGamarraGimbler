@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,7 +56,6 @@ public class ProductoController {
 		model.addAttribute("usuario", usuarioEncontrado.getNombre() + " " + usuarioEncontrado.getApellidos());
 		
 		List<CategoriaEntity> listaCategoria = categoriaService.listarCategoria();
-
 		model.addAttribute("categorias", listaCategoria);
 		model.addAttribute("producto", new ProductoEntity());
 		return "registrar_producto";
@@ -67,4 +67,52 @@ public class ProductoController {
 		productoService.crearProducto(prod);
 		return "redirect:/producto/";
 	}
+	
+	@GetMapping("/editar_producto/{id}")
+	public String mostrarProductoEditar(@PathVariable("id") Integer id, Model model, HttpSession session) {
+		if (session.getAttribute("usuario") == null) {
+			return "redirect:/";
+		}
+		
+		String usuarioSesion = session.getAttribute("usuario").toString();
+		UsuarioEntity usuarioEncontrado = usuarioService.buscarUsuarioPorCorreo(usuarioSesion);
+		model.addAttribute("usuario", usuarioEncontrado.getNombre() + " " + usuarioEncontrado.getApellidos());
+		
+		ProductoEntity producto = productoService.buscarporId(id);
+		List<CategoriaEntity> listaCategoria = categoriaService.listarCategoria();
+		model.addAttribute("categorias", listaCategoria);
+		model.addAttribute("producto",producto);
+		return "editar_producto";
+	}
+	
+	
+	@PostMapping("/editar_producto/{id}")
+	public String editarUsuario(@PathVariable("id") Integer id,@ModelAttribute("user") ProductoEntity producto, Model model) {
+		productoService.actualizarProducto(id, producto);
+		return "redirect:/producto/";
+	}
+	
+	
+	@GetMapping("/detalle_producto/{id}")
+	public String verDetalle(Model model, @PathVariable("id") Integer id , HttpSession session) {
+		
+		if (session.getAttribute("usuario") == null) {
+			return "redirect:/";
+		}
+		
+		String usuarioSesion = session.getAttribute("usuario").toString();
+		UsuarioEntity usuarioEncontrado = usuarioService.buscarUsuarioPorCorreo(usuarioSesion);
+		model.addAttribute("usuario", usuarioEncontrado.getNombre() + " " + usuarioEncontrado.getApellidos());
+		
+		ProductoEntity producto = productoService.buscarporId(id);
+		model.addAttribute("producto",producto);
+		return "detalle_producto";
+	}
+
+	@GetMapping("/delete/{id}")
+	public String deleteUsuario(@PathVariable("id") Integer id) {
+		productoService.eliminarProducto(id);
+		return "redirect:/producto/";
+	}
+	
 }

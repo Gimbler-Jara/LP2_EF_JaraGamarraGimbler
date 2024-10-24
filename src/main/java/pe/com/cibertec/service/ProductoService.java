@@ -9,5 +9,11 @@ public interface ProductoService {
 	List<ProductoEntity> listarProducto();
 
 	void crearProducto(ProductoEntity productoEntity);
+	
+	ProductoEntity buscarporId(Integer id);
+	
+	void eliminarProducto(Integer id);
+	
+	void actualizarProducto(Integer id, ProductoEntity producto);
 
 }

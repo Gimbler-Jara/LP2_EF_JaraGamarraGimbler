@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD con Thymeleaf y Bootstrap</title>
+    <!-- Estilos de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body style="background-color: gray; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+
+<div style="width: 90vw; display: flex;justify-content: space-around; margin: 0 auto;  margin-top: 20px; margin-bottom: 20px; color: white;">
+<h3>Bienvenido: <span th:text="${usuario}"></span></h3>
+<a class="btn btn-outline-warning ml-2" th:href="@{/logout}" role="button">Cerrar sesión</a>
+</div>
+
+    <div class="container">
+        <h2>Detalles del Producto</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="'Nombre: ' + ${producto.nombreProducto}">No existe</h5>
+                <p class="card-text" th:text="'Correo electrónico: '+ ${producto.precio}"></p>
+                <p class="card-text" th:text="'Password: ' + ${producto.stockProducto}"></p>
+                 <p class="card-text" th:text="'Password: ' + ${producto.categoriaEntity.nombreCategoria}"></p>
+                
+                <a th:href="@{/producto/}" class="btn btn-secondary">Regresar</a>
+                <a th:href="@{/producto/delete/{id}(id=${producto.productoId})}" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <!-- Scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+</body>
+</html>
