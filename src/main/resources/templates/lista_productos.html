@@ -17,7 +17,10 @@
   
     <div class="container mt-5">
         <h2 class="mb-3 mt-3">Lista de Productos</h2>
-        <a th:href="@{/producto/registrar_producto}" class="btn btn-primary mb-5 mt-3">Registrar</a>
+        <div class="text-right mr-4">
+           <a target="_blank" th:href="@{/producto/generar_pdf}" class="btn btn-info">Generar PDF</a>
+        </div>
+        <a th:href="@{/producto/registrar_producto}" class="btn btn-primary mb-3 mt-3">Registrar Producto</a>
         <table class="table table-bordered table-dark text-center text-white">
             <thead>
                 <tr>

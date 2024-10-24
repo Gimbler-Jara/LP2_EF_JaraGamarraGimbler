@@ -1,7 +1,15 @@
 package pe.com.cibertec.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +26,7 @@ import pe.com.cibertec.model.entity.UsuarioEntity;
 import pe.com.cibertec.service.CategoriaService;
 import pe.com.cibertec.service.ProductoService;
 import pe.com.cibertec.service.UsuarioService;
+import pe.com.cibertec.service.impl.PdfService;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +38,8 @@ public class ProductoController {
 	private final CategoriaService categoriaService;
 	
 	private final UsuarioService usuarioService;
+	
+	private final PdfService pdfService;
 
 	@GetMapping("/")
 	public String listarProducto(Model model , HttpSession session) {
@@ -113,6 +124,25 @@ public class ProductoController {
 	public String deleteUsuario(@PathVariable("id") Integer id) {
 		productoService.eliminarProducto(id);
 		return "redirect:/producto/";
+	}
+	
+	@GetMapping("/generar_pdf")
+	public ResponseEntity<InputStreamResource> generarPDf(HttpSession sesion) throws IOException {
+		
+		String usuarioSesion = sesion.getAttribute("usuario").toString();
+		UsuarioEntity usuarioEncontrado = usuarioService.buscarUsuarioPorCorreo(usuarioSesion);
+		
+		Map<String, Object> datosPdf = new HashMap<String, Object>();
+		datosPdf.put("factura", productoService.listarProducto());
+		datosPdf.put("usuario", usuarioEncontrado.getNombre() + " " + usuarioEncontrado.getApellidos());
+		ByteArrayInputStream pdfBytes = pdfService.generarPdf("template_pdf", datosPdf);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=productos.pdf");
+
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(pdfBytes));
+		
 	}
 	
 }
